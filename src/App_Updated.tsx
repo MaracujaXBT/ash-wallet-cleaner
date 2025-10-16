@@ -6,7 +6,6 @@ import { RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit'
 import { config } from './config/rainbow'
 import { calculateDevFee, calculateNetAmount } from './config/fees'
 import { useRealTokenBalances } from './hooks/useRealTokenBalances'
-import { useHyperswapV3 } from './hooks/useHyperswapV3'
 import '@rainbow-me/rainbowkit/styles.css'
 import './App.css'
 
@@ -23,12 +22,10 @@ const queryClient = new QueryClient()
 function AppContent() {
   const { isConnected } = useAccount()
   const { tokens, isLoading } = useRealTokenBalances()
-  const { swapTokens, isPending } = useHyperswapV3()
   const [selected, setSelected] = useState<Record<string, boolean>>({})
   const [showConfirm, setShowConfirm] = useState(false)
   const [busy, setBusy] = useState(false)
   const [ack, setAck] = useState(false)
-  const [swapProgress, setSwapProgress] = useState('')
 
   const selectedTokens = useMemo(() => {
     return tokens.filter(t => selected[t.address])
@@ -70,36 +67,16 @@ function AppContent() {
     setAck(false)
   }
 
-  const handleConfirmClean = async () => {
+  const handleConfirmClean = () => {
     if (!ack) return
     setBusy(true)
-    setSwapProgress('Starting swap process...')
-
-    try {
-      // Process each selected token
-      for (let i = 0; i < selectedTokens.length; i++) {
-        const token = selectedTokens[i]
-        setSwapProgress(`Swapping ${token.symbol} (${i + 1}/${selectedTokens.length})...`)
-        
-        // Swap token to HYPE using Hyperswap
-        await swapTokens(
-          token.address,
-          '0x7317beb7cceed72ef0b346074cc8e7ab', // HYPE token address
-          token.balance.toString(),
-          (step) => setSwapProgress(`Swapping ${token.symbol}: ${step}`)
-        )
-      }
-
-      setSwapProgress('All swaps completed!')
+    // TODO: Implement actual swap logic with Hyperswap
+    setTimeout(() => {
+      setBusy(false)
       setShowConfirm(false)
       setSelected({})
       setAck(false)
-    } catch (error) {
-      console.error('Swap failed:', error)
-      setSwapProgress(`Swap failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
-    } finally {
-      setBusy(false)
-    }
+    }, 3000)
   }
 
   const handleCancelClean = () => {
@@ -228,27 +205,22 @@ function AppContent() {
                 />
                 <span className="text-sm">I acknowledge slippage and fees</span>
               </label>
-               {swapProgress && (
-                 <div className="text-sm text-secondary bg-gray-100 p-3 rounded">
-                   {swapProgress}
-                 </div>
-               )}
-               <div className="flex gap-2">
-                 <button 
-                   className="btn flex-1" 
-                   onClick={handleConfirmClean}
-                   disabled={!ack || busy || isPending}
-                 >
-                   {busy ? 'Processing...' : 'Confirm Clean'}
-                 </button>
-                 <button 
-                   className="btn btn-secondary flex-1" 
-                   onClick={handleCancelClean}
-                   disabled={busy}
-                 >
-                   Cancel
-                 </button>
-               </div>
+              <div className="flex gap-2">
+                <button 
+                  className="btn flex-1" 
+                  onClick={handleConfirmClean}
+                  disabled={!ack || busy}
+                >
+                  {busy ? 'Processing...' : 'Confirm Clean'}
+                </button>
+                <button 
+                  className="btn btn-secondary flex-1" 
+                  onClick={handleCancelClean}
+                  disabled={busy}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}

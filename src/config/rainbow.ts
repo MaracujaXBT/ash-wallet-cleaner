@@ -8,8 +8,8 @@ const hyperevm = defineChain({
   name: HYPEREVM_CONFIG.name,
   nativeCurrency: {
     decimals: 18,
-    name: 'Ether',
-    symbol: 'ETH',
+    name: 'HYPE',
+    symbol: 'HYPE',
   },
   rpcUrls: {
     default: {
