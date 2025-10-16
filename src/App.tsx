@@ -7,6 +7,7 @@ import { config } from './config/rainbow'
 import { calculateDevFee, calculateNetAmount } from './config/fees'
 import { useRealTokenBalances } from './hooks/useRealTokenBalances'
 import { useHyperswapV3 } from './hooks/useHyperswapV3'
+import { HYPEREVM_CONFIG } from './config/hyperevm'
 import '@rainbow-me/rainbowkit/styles.css'
 import './App.css'
 
@@ -84,7 +85,7 @@ function AppContent() {
         // Swap token to HYPE using Hyperswap
         await swapTokens(
           token.address,
-          '0x7317beb7cceed72ef0b346074cc8e7ab', // HYPE token address
+          HYPEREVM_CONFIG.contracts.HYPE, // HYPE token address
           token.balance.toString(),
           (step) => setSwapProgress(`Swapping ${token.symbol}: ${step}`)
         )
