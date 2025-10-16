@@ -8,16 +8,9 @@ import { calculateDevFee, calculateNetAmount } from './config/fees'
 import { useRealTokenBalances } from './hooks/useRealTokenBalances'
 import { useHyperswapV3 } from './hooks/useHyperswapV3'
 import { HYPEREVM_CONFIG } from './config/hyperevm'
+import { TokenRow } from './types'
 import '@rainbow-me/rainbowkit/styles.css'
 import './App.css'
-
-interface TokenRow {
-  address: string
-  symbol: string
-  name: string
-  balance: number
-  estHypeOut: number // estimated hype output
-}
 
 const queryClient = new QueryClient()
 

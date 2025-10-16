@@ -1,6 +1,7 @@
 import { useAccount, useReadContract } from 'wagmi'
 import { useMemo } from 'react'
 import { HYPEREVM_CONFIG } from '../config/hyperevm'
+import { TokenBalance } from '../types'
 
 // ERC-20 ABI for balance checking
 const ERC20_ABI = [
@@ -34,14 +35,7 @@ const ERC20_ABI = [
   },
 ] as const
 
-interface TokenBalance {
-  address: string
-  symbol: string
-  name: string
-  balance: number
-  decimals: number
-  estHypeOut: number
-}
+// Using TokenBalance from types/index.ts
 
 export function useRealTokenBalances() {
   const { address, isConnected } = useAccount()

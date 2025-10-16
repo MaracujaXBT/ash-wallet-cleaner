@@ -80,7 +80,7 @@ export function useHyperswapV3() {
   const { writeContract, isPending, error } = useWriteContract()
 
   // Get quote for swap (simplified - in production you'd use a proper quote API)
-  const getSwapQuote = async (tokenIn: string, tokenOut: string, amountIn: string) => {
+  const getSwapQuote = async (_tokenIn: string, _tokenOut: string, amountIn: string) => {
     // This is a simplified implementation
     // In production, you'd call Hyperswap's quote API or use their SDK
     const amountInWei = parseUnits(amountIn, 18)
