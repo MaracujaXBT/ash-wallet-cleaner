@@ -34,15 +34,7 @@ const ERC20_ABI = [
   },
 ] as const
 
-// Define TokenBalance interface locally to avoid unused import
-interface TokenBalance {
-  address: string
-  symbol: string
-  name: string
-  balance: number
-  decimals: number
-  estHypeOut: number
-}
+// Using inline types to avoid unused interface errors
 
 export function useRealTokenBalances() {
   const { address, isConnected } = useAccount()
@@ -99,7 +91,14 @@ export function useRealTokenBalances() {
     const realTokens = tokenBalances.filter(token => token.balance > 0)
     
     // Add some mock tokens for testing (remove this when you have real tokens)
-    const mockTokens = [
+    const mockTokens: Array<{
+      address: string
+      symbol: string
+      name: string
+      balance: number
+      decimals: number
+      estHypeOut: number
+    }> = [
       { address: '0x55d398326f99059fF775485246999027B3197955', symbol: 'USDT', name: 'Tether USD', balance: 0.005, decimals: 18, estHypeOut: 0.0048 },
       { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH', name: 'Wrapped Ether', balance: 0.002, decimals: 18, estHypeOut: 0.0019 },
       { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI', name: 'Dai Stablecoin', balance: 0.008, decimals: 18, estHypeOut: 0.0076 },
