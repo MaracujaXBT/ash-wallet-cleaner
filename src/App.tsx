@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { config } from './config/rainbow'
@@ -13,6 +13,8 @@ const queryClient = new QueryClient()
 
 function AppContent() {
   const { isConnected, address } = useAccount()
+  const { connect, connectors } = useConnect()
+  const { disconnect } = useDisconnect()
   const { tokens, isLoading } = useRealTokenBalances()
   const { swapTokens, isPending } = useHyperswapV3()
   const [selected, setSelected] = useState<Record<string, boolean>>({})
@@ -96,6 +98,10 @@ function AppContent() {
     setAck(false)
   }
 
+  const handleConnect = (connector: any) => {
+    connect({ connector })
+  }
+
   return (
     <div className="app">
       <header className="header">
@@ -110,13 +116,29 @@ function AppContent() {
             Connect your wallet to start cleaning dust tokens and converting them to HYPE.
           </p>
           {isConnected ? (
-            <div className="text-center">
-              <div className="status connected">Connected: {address?.slice(0, 6)}...{address?.slice(-4)}</div>
-              <div className="text-sm text-secondary mt-2">HyperEVM Testnet</div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className="status connected">Connected</span>
+                <div className="text-sm text-secondary">
+                  {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Unknown'}
+                </div>
+                <div className="text-sm text-secondary">HyperEVM Testnet</div>
+              </div>
+              <button className="btn btn-secondary" onClick={() => disconnect()}>
+                Disconnect
+              </button>
             </div>
           ) : (
-            <div className="text-center">
-              <div className="text-secondary">Please connect your wallet using your browser extension</div>
+            <div className="flex flex-col gap-2">
+              {connectors.map((connector) => (
+                <button 
+                  key={connector.uid} 
+                  className="btn w-full" 
+                  onClick={() => handleConnect(connector)}
+                >
+                  {connector.name}
+                </button>
+              ))}
             </div>
           )}
         </div>
