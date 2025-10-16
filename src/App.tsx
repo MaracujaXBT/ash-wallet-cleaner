@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useMemo, useState } from 'react'
+import { useAccount } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit'
@@ -19,10 +19,9 @@ interface TokenRow {
 const queryClient = new QueryClient()
 
 function AppContent() {
-  const { address, isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
+  const { isConnected } = useAccount()
   
-  const [tokens, setTokens] = useState<TokenRow[]>([
+  const [tokens] = useState<TokenRow[]>([
     { address: '0x55d398326f99059fF775485246999027B3197955', symbol: 'USDT', name: 'Tether USD', balance: 0.005, estHypeOut: 0.0048 },
     { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH', name: 'Wrapped Ether', balance: 0.002, estHypeOut: 0.0019 },
     { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI', name: 'Dai Stablecoin', balance: 0.008, estHypeOut: 0.0076 },
