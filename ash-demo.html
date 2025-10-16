@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASH - Burn your dust. Worship the HYPE.</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-bg: #0F0F0F;
+            --secondary-bg: #1A1A1A;
+            --accent-color: #33FFD6;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --border-color: #333333;
+            --success-color: #00FF88;
+            --error-color: #FF4444;
+            --warning-color: #FFAA00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1A1A1A 100%);
+        }
+        
+        .app {
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-color), #00FF88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, var(--accent-color), #00FF88);
+            color: var(--primary-bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(51, 255, 214, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status.connected {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success-color);
+        }
+        
+        .status.disconnected {
+            background: rgba(255, 68, 68, 0.2);
+            color: var(--error-color);
+        }
+        
+        .status.pending {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning-color);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        
+        .gap-4 {
+            gap: 1rem;
+        }
+        
+        .w-4 {
+            width: 1rem;
+        }
+        
+        .h-4 {
+            height: 1rem;
+        }
+        
+        .w-6 {
+            width: 1.5rem;
+        }
+        
+        .h-6 {
+            height: 1.5rem;
+        }
+        
+        .mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+        
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+        
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        
+        .mt-3 {
+            margin-top: 1.5rem;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+        
+        .text-accent-color {
+            color: var(--accent-color);
+        }
+        
+        .text-success-color {
+            color: var(--success-color);
+        }
+        
+        .text-error-color {
+            color: var(--error-color);
+        }
+        
+        .text-warning-color {
+            color: var(--warning-color);
+        }
+        
+        .py-8 {
+            padding: 2rem 0;
+        }
+        
+        .px-2 {
+            padding: 0.5rem;
+        }
+        
+        .py-1 {
+            padding: 0.25rem 0;
+        }
+        
+        .rounded {
+            border-radius: 0.25rem;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .font-mono {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-xs {
+            font-size: 0.75rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        
+        .transition-colors {
+            transition: color 0.15s ease-in-out;
+        }
+        
+        .hover\:text-accent-color\/80:hover {
+            color: rgba(51, 255, 214, 0.8);
+        }
+        
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+        
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+        
+        .slider-container {
+            margin: 1rem 0;
+        }
+        
+        .slider-container label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .slider-container .flex {
+            display: flex;
+        }
+        
+        .slider-container .justify-between {
+            justify-content: space-between;
+        }
+        
+        .slider-container .text-xs {
+            font-size: 0.75rem;
+        }
+        
+        .slider-container .text-secondary {
+            color: var(--text-secondary);
+        }
+        
+        .slider-container .mt-1 {
+            margin-top: 0.25rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .table th {
+            background: var(--primary-bg);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .table tr:hover {
+            background: rgba(51, 255, 214, 0.05);
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+        
+        .logs {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+        }
+        
+        .log-entry {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .log-entry.success {
+            background: rgba(0, 255, 136, 0.1);
+            border-left-color: var(--success-color);
+        }
+        
+        .log-entry.error {
+            background: rgba(255, 68, 68, 0.1);
+            border-left-color: var(--error-color);
+        }
+        
+        .log-entry.warning {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: var(--warning-color);
+        }
+        
+        .log-entry.info {
+            background: rgba(51, 255, 214, 0.1);
+            border-left-color: var(--accent-color);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .table {
+                font-size: 0.875rem;
+            }
+            
+            .table th,
+            .table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>ASH</h1>
+            <p>Burn your dust. Worship the HYPE.</p>
+        </header>
+        
+        <main class="main-content">
+            <!-- Wallet Connection -->
+            <div class="card">
+                <h2>Connect Wallet</h2>
+                <p class="mb-3 text-secondary">
+                    Connect your wallet to start cleaning dust tokens and converting them to HYPE.
+                </p>
+                <div class="flex flex-col gap-2">
+                    <button class="btn w-full" onclick="connectWallet()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        MetaMask
+                    </button>
+                    <button class="btn w-full" onclick="connectWallet()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        WalletConnect
+                    </button>
+                    <button class="btn w-full" onclick="connectWallet()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Rabby Wallet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-4">
+                    <h2>Settings</h2>
+                    <button class="btn btn-secondary" onclick="toggleSettings()">Show Settings</button>
+                </div>
+                <div id="settings" class="space-y-4" style="display: none;">
+                    <div class="slider-container">
+                        <label class="block text-sm font-medium mb-2">
+                            Dust Threshold: <span id="thresholdValue">0.01</span> tokens
+                        </label>
+                        <input type="range" min="0.001" max="1" step="0.001" value="0.01" oninput="updateThreshold(this.value)" class="slider">
+                        <div class="flex justify-between text-xs text-secondary mt-1">
+                            <span>0.001</span>
+                            <span>1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-primary-bg rounded-lg border border-border-color">
+                        <div class="text-sm text-secondary mb-2">Current Chain</div>
+                        <div class="font-medium">Cross-chain Bridge Required</div>
+                        <div class="text-sm text-warning-color mt-1">
+                            Tokens will be bridged to HyperEVM before converting to HYPE
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token Table -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-4">
+                    <h2>Dust Tokens (<span id="dustCount">3</span>)</h2>
+                    <button class="btn btn-secondary" onclick="refreshTokens()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-4 mb-4">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="checkbox">
+                        <span>Select All Dust Tokens</span>
+                    </label>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Token</th>
+                                <th>Balance</th>
+                                <th>Est. HYPE Output</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tokenTable">
+                            <tr>
+                                <td><input type="checkbox" class="checkbox" onchange="toggleToken(this)"></td>
+                                <td>
+                                    <div>
+                                        <div class="font-medium">USDT</div>
+                                        <div class="text-sm text-secondary">Tether USD</div>
+                                        <div class="text-xs text-secondary font-mono">0x55d3...7955</div>
+                                    </div>
+                                </td>
+                                <td><div class="font-mono">0.005</div></td>
+                                <td><div class="font-mono text-accent-color">0.0048</div></td>
+                                <td><span class="status pending">Ready</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="checkbox" onchange="toggleToken(this)"></td>
+                                <td>
+                                    <div>
+                                        <div class="font-medium">WETH</div>
+                                        <div class="text-sm text-secondary">Wrapped Ether</div>
+                                        <div class="text-xs text-secondary font-mono">0xC02a...6Cc2</div>
+                                    </div>
+                                </td>
+                                <td><div class="font-mono">0.002</div></td>
+                                <td><div class="font-mono text-accent-color">0.0019</div></td>
+                                <td><span class="status pending">Ready</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="checkbox" onchange="toggleToken(this)"></td>
+                                <td>
+                                    <div>
+                                        <div class="font-medium">DAI</div>
+                                        <div class="text-sm text-secondary">Dai Stablecoin</div>
+                                        <div class="text-xs text-secondary font-mono">0x6B17...71d0F</div>
+                                    </div>
+                                </td>
+                                <td><div class="font-mono">0.008</div></td>
+                                <td><div class="font-mono text-accent-color">0.0076</div></td>
+                                <td><span class="status pending">Ready</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4 p-4 bg-primary-bg rounded-lg border border-border-color">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-secondary">Selected Tokens</div>
+                            <div class="font-medium" id="selectedCount">0 of 3</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-secondary">Estimated Total HYPE</div>
+                            <div class="font-medium text-accent-color" id="totalHype">0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Panel -->
+            <div class="card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2" id="actionTitle">Select Tokens</h3>
+                        <p class="text-secondary" id="actionDesc">Select dust tokens to convert to HYPE</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <div class="text-sm text-secondary">Bridge Route</div>
+                            <div class="flex items-center gap-2 text-accent-color">
+                                <span>Current Chain</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                                <span>HyperEVM</span>
+                            </div>
+                        </div>
+                        <button class="btn" id="cleanBtn" onclick="cleanSelected()" disabled>
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            Clean Selected → HYPE
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Logs -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-4">
+                    <h2>Transaction Logs (<span id="logCount">0</span>)</h2>
+                    <button class="btn btn-secondary" onclick="clearLogs()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Clear Logs
+                    </button>
+                </div>
+                <div class="logs" id="logs">
+                    <div class="text-center py-8 text-secondary">
+                        <div class="text-4xl mb-4">📝</div>
+                        <p>No transactions yet. Start cleaning your dust tokens!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let selectedTokens = 0;
+        let isConnected = false;
+
+        function connectWallet() {
+            isConnected = true;
+            addLog('info', 'Wallet connected', 'MetaMask wallet connected successfully');
+            updateUI();
+        }
+
+        function toggleSettings() {
+            const settings = document.getElementById('settings');
+            settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function updateThreshold(value) {
+            document.getElementById('thresholdValue').textContent = value;
+        }
+
+        function refreshTokens() {
+            addLog('info', 'Refreshing tokens', 'Scanning wallet for dust tokens...');
+            setTimeout(() => {
+                addLog('success', 'Tokens refreshed', 'Found 3 dust tokens');
+            }, 1000);
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('#tokenTable input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = selectAll.checked;
+                toggleToken(cb);
+            });
+        }
+
+        function toggleToken(checkbox) {
+            if (checkbox.checked) {
+                selectedTokens++;
+            } else {
+                selectedTokens--;
+                document.getElementById('selectAll').checked = false;
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            const selectedCount = document.getElementById('selectedCount');
+            const totalHype = document.getElementById('totalHype');
+            const cleanBtn = document.getElementById('cleanBtn');
+            const actionTitle = document.getElementById('actionTitle');
+            const actionDesc = document.getElementById('actionDesc');
+            
+            selectedCount.textContent = `${selectedTokens} of 3`;
+            totalHype.textContent = selectedTokens > 0 ? '0.0143' : '0.00';
+            cleanBtn.disabled = selectedTokens === 0;
+            
+            if (selectedTokens > 0) {
+                actionTitle.textContent = 'Ready to Clean';
+                actionDesc.textContent = `${selectedTokens} token${selectedTokens > 1 ? 's' : ''} selected for cleaning`;
+            } else {
+                actionTitle.textContent = 'Select Tokens';
+                actionDesc.textContent = 'Select dust tokens to convert to HYPE';
+            }
+        }
+
+        function cleanSelected() {
+            if (selectedTokens === 0) return;
+            
+            addLog('info', `Starting cleanup of ${selectedTokens} dust tokens`, 'Selected tokens will be converted to HYPE');
+            
+            setTimeout(() => {
+                addLog('info', 'Cross-chain bridge required', 'Bridging tokens to HyperEVM');
+            }, 1000);
+            
+            setTimeout(() => {
+                addLog('success', 'Successfully bridged and converted to HYPE', 'Tokens have been bridged to HyperEVM and converted to HYPE');
+                selectedTokens = 0;
+                updateUI();
+            }, 3000);
+        }
+
+        function addLog(type, message, details) {
+            const logs = document.getElementById('logs');
+            const logCount = document.getElementById('logCount');
+            const timestamp = new Date().toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+                            <span class="font-medium text-${type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'accent'}-color">${message}</span>
+                            <span class="text-xs text-secondary">${timestamp}</span>
+                        </div>
+                        ${details ? `<div class="text-sm text-secondary ml-6 mb-2">${details}</div>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            if (logs.children.length === 1 && logs.children[0].textContent.includes('No transactions')) {
+                logs.innerHTML = '';
+            }
+            
+            logs.appendChild(logEntry);
+            logCount.textContent = logs.children.length;
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = `
+                <div class="text-center py-8 text-secondary">
+                    <div class="text-4xl mb-4">📝</div>
+                    <p>No transactions yet. Start cleaning your dust tokens!</p>
+                </div>
+            `;
+            document.getElementById('logCount').textContent = '0';
+        }
+    </script>
+</body>
+</html>
